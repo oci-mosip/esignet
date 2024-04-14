@@ -44,10 +44,10 @@ function installing_esignet() {
 
   ./keycloak-init.sh
 
-  echo Please enter the recaptcha admin site key for domain $ESIGNET_HOST
-  read ESITE_KEY
-  echo Please enter the recaptcha admin secret key for domain $ESIGNET_HOST
-  read ESECRET_KEY
+ # echo Please enter the recaptcha admin site key for domain $ESIGNET_HOST
+ # read ESITE_KEY
+ # echo Please enter the recaptcha admin secret key for domain $ESIGNET_HOST
+ # read ESECRET_KEY
 
   echo Setting up captcha secrets
   kubectl -n $NS create secret generic esignet-captcha --from-literal=esignet-captcha-site-key=$ESITE_KEY --from-literal=esignet-captcha-secret-key=$ESECRET_KEY --dry-run=client -o yaml | kubectl apply -f -
@@ -69,19 +69,20 @@ function installing_esignet() {
 
   kubectl -n config-server get deploy -o name |  xargs -n1 -t  kubectl -n config-server rollout status
 
-  echo "Do you have public domain & valid SSL? (Y/n) "
-  echo "Y: if you have public domain & valid ssl certificate"
-  echo "n: If you don't have a public domain and a valid SSL certificate. Note: It is recommended to use this option only in development environments."
-  read -p "" flag
+#  echo "Do you have public domain & valid SSL? (Y/n) "
+#  echo "Y: if you have public domain & valid ssl certificate"
+#  echo "n: If you don't have a public domain and a valid SSL certificate. Note: It is recommended to use this option only in development environments."
+#  read -p "" flag
 
-  if [ -z "$flag" ]; then
-    echo "'flag' was provided; EXITING;"
-    exit 1;
-  fi
-  ENABLE_INSECURE=''
-  if [ "$flag" = "n" ]; then
-    ENABLE_INSECURE='--set enable_insecure=true';
-  fi
+#  if [ -z "$flag" ]; then
+#    echo "'flag' was provided; EXITING;"
+#    exit 1;
+#  fi
+#  ENABLE_INSECURE=''
+#  if [ "$flag" = "n" ]; then
+#    ENABLE_INSECURE='--set enable_insecure=true';
+#  fi
+  ENABLE_INSECURE='--set enable_insecure=true';
 
   echo Installing esignet
   helm -n $NS install esignet mosip/esignet --version $CHART_VERSION $ENABLE_INSECURE
