@@ -43,7 +43,9 @@ function installing_esignet() {
   kubectl -n config-server get deploy -o name |  xargs -n1 -t  kubectl -n config-server rollout status
 
   ./keycloak-init.sh
-
+  # Temporary fix for adding the keycloak-internal-service-url in the configmap keycloak-host
+  KEYCLOAK_SVC_URL=$(kubectl get cm keycloak-host -n esignet -o jsonpath={.data.keycloak-internal-url})
+  kubectl patch cm keycloak-host -n esignet -p '{"data": {"keycloak-internal-service-url": "'${KEYCLOAK_SVC_URL}'"}}'
  # echo Please enter the recaptcha admin site key for domain $ESIGNET_HOST
  # read ESITE_KEY
  # echo Please enter the recaptcha admin secret key for domain $ESIGNET_HOST
