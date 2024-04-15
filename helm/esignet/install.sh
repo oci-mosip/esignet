@@ -69,7 +69,7 @@ function installing_esignet() {
   kubectl -n config-server set env --keys=esignet-captcha-secret-key --from secret/esignet-captcha deployment/config-server --prefix=SPRING_CLOUD_CONFIG_SERVER_OVERRIDES_
   kubectl -n config-server set env --keys=mosip-esignet-misp-key --from secret/esignet-misp-onboarder-key deployment/config-server --prefix=SPRING_CLOUD_CONFIG_SERVER_OVERRIDES_
 
-  kubectl -n config-server get deploy -o name |  xargs -n1 -t  kubectl -n config-server rollout status
+  kubectl -n config-server get deploy -o name |  xargs -n1 -t  kubectl -n config-server rollout status 
 
 #  echo "Do you have public domain & valid SSL? (Y/n) "
 #  echo "Y: if you have public domain & valid ssl certificate"
@@ -89,7 +89,7 @@ function installing_esignet() {
   echo Installing esignet
   helm -n $NS install esignet mosip/esignet --version $CHART_VERSION $ENABLE_INSECURE
 
-  kubectl -n $NS  get deploy -o name |  xargs -n1 -t  kubectl -n $NS rollout status
+  kubectl -n $NS  get deploy -o name |  xargs -n1 -t  kubectl -n $NS rollout status --watch=false
 
   echo Installed esignet service
   return 0
