@@ -30,7 +30,7 @@ function installing_oidc-ui() {
   --set istio.hosts\[0\]=$ESIGNET_HOST \
   --version $CHART_VERSION
 
-  kubectl -n $NS  get deploy -o name |  xargs -n1 -t  kubectl -n $NS rollout status
+  kubectl -n $NS  get deploy -o name |  xargs -n1 -t  kubectl -n $NS rollout status --watch=false
 
   echo Installed oidc-ui
   return 0
