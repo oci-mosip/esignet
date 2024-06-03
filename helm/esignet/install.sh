@@ -50,6 +50,8 @@ function installing_esignet() {
  # read ESITE_KEY
  # echo Please enter the recaptcha admin secret key for domain $ESIGNET_HOST
  # read ESECRET_KEY
+  export ESECRET_KEY=$CAPTCHA_SECRET_KEY
+  export ESITE_KEY=$CAPTCHA_SITE_KEY
 
   echo Setting up captcha secrets
   kubectl -n $NS create secret generic esignet-captcha --from-literal=esignet-captcha-site-key=$ESITE_KEY --from-literal=esignet-captcha-secret-key=$ESECRET_KEY --dry-run=client -o yaml | kubectl apply -f -
