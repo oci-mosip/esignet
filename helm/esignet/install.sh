@@ -82,11 +82,11 @@ function installing_esignet() {
 #    echo "'flag' was provided; EXITING;"
 #    exit 1;
 #  fi
-#  ENABLE_INSECURE=''
+   ENABLE_INSECURE=''
 #  if [ "$flag" = "n" ]; then
 #    ENABLE_INSECURE='--set enable_insecure=true';
 #  fi
-  ENABLE_INSECURE='--set enable_insecure=true';
+#  ENABLE_INSECURE='--set enable_insecure=true';
 
   echo Installing esignet
   helm -n $NS install esignet mosip/esignet --version $CHART_VERSION $ENABLE_INSECURE
