@@ -12,10 +12,10 @@ CHART_VERSION=12.0.1
 helm repo add mosip https://mosip.github.io/mosip-helm
 helm repo update
 
-while true; do
-    read -p "CAUTION: Do we already have Postgres installed? Also make sure the esignet DB is backed up as the same will be overriden. Do you still want to continue?" yn
-    if [ $yn = "Y" ]
-      then
+# while true; do
+#     read -p "CAUTION: Do we already have Postgres installed? Also make sure the esignet DB is backed up as the same will be overriden. Do you still want to continue?" yn
+#     if [ $yn = "Y" ]
+#       then
         DB_USER_PASSWORD=$( kubectl -n postgres get secrets db-common-secrets -o jsonpath={.data.db-dbuser-password} | base64 -d )
 
         kubectl create ns $NS
@@ -35,7 +35,7 @@ while true; do
         --set dbUserPasswords.dbuserPassword="$DB_USER_PASSWORD" \
         --wait --wait-for-jobs
         break
-      else
-        break
-    fi
-done
+#       else
+#         break
+#     fi
+# done
